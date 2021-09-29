@@ -102,3 +102,24 @@ In terms of hardware, it is necessary to create a circuit connecting the led to 
  |   |
 gnd  |-/\/\- pin
 ```
+
+## switches
+
+Alternate between switches and with a delay.
+
+Expanding the [switch](#switch) program the idea is to set up multiple pins, three led and one buzzer, and loop through the pins in a specific order.
+
+In loop the code actually sends `0` to every pin before sending `1` to the relevant destination.
+
+```c++
+digitalWrite(LED_1, 0);
+digitalWrite(LED_2, 0);
+digitalWrite(LED_3, 0);
+digitalWrite(BUZZER, 0);
+
+digitalWrite(pin, 1);
+```
+
+With every iteration the `pin` variable is then updated with a `switch` statement.
+
+In terms of hardware, it is necessary to repeat the circuit for every pin.
