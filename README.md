@@ -251,3 +251,47 @@ For the hardware, the board is set up with three leds, one buzzer and a button.
 For the software, the `index` variable is used as a controlling variable. Initialized at `-1`, the idea is to update the value to `0` when the button is pressed. With a value different from the default, then, the idea is to loop through the arrays of leds and delays.
 
 For the second led, the yellow variant, the script also switches the buzzer.
+
+## analogread
+
+Read the temperature from a sensor and an analog pin.
+
+The sensor in question is a [TMP 36GZ](https://www.analog.com/media/en/technical-documentation/data-sheets/TMP35_36_37.pdf), and is wired to the board connecting the ground, voltage and the analog pin.
+
+```text
+    ___
+   /___\
+   sensor
+   | | |
+gnd| | | analog pin
+     |
+  voltage
+```
+
+For the code, the relevant function is `analogRead()`, and it doesn't seem necessary to set up the pin like the digital counterpart.
+
+```c++
+int value = analogRead(PIN);
+```
+
+This works, but the value returned by the sensor is not the temperature as much as a proxy for the measure, a voltage as a 10-bit reading.
+
+Following the cited source, it is first necessary to convert the measure to voltage. The output varies in the range of `[0, 5]` volts, while the value varies in the `[0, 1024]` range, leading to the following formula.
+
+```c++
+float voltage = value / 1024.0 * 5.0;
+```
+
+The temperature is then computed considering the linear relationship between voltage and temperature itself.
+
+The relationship can be explained in the formula `V = m * T + q`, with `V` and `T` describing the two metrics, `m` the scaling factor and `q` the line's offset. Once again following the data sheet, `m` proves to the `10` millivolts, `0.01` volts, while `q` is `0.5` volts. Which means:
+
+```code
+V = 0.01 * T + 0.5
+
+T = (V - 0.5) / 0.01
+
+T = (V - 0.5) * 100
+```
+
+Dividing by `0.01` is fundamentally equivalent as multiplying by `100`.
