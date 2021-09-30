@@ -239,3 +239,15 @@ if(currentMillis - previousMillis > 1000) {
     previousMillis = currentMillis;
 }
 ```
+
+## stoplight
+
+Create a basic stoplight, triggering a sequence of leds and buzzer at the press of a button.
+
+The project is fundamentally an amalgamation of previous scripts, chiefly [**buttonpress**](#buttonpress) and [**delays**](#delays).
+
+For the hardware, the board is set up with three leds, one buzzer and a button.
+
+For the software, the `index` variable is used as a controlling variable. Initialized at `-1`, the idea is to update the value to `0` when the button is pressed. With a value different from the default, then, the idea is to loop through the arrays of leds and delays.
+
+For the second led, the yellow variant, the script also switches the buzzer.
