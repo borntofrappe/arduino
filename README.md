@@ -107,7 +107,7 @@ gnd  |-/\/\- pin
 
 Alternate between switches and with a delay.
 
-Expanding the [switch](#switch) program the idea is to set up multiple pins, three led and one buzzer, and loop through the pins in a specific order.
+Expanding the [**switch**](#switch) program the idea is to set up multiple pins, three led and one buzzer, and loop through the pins in a specific order.
 
 In loop the code actually sends `0` to every pin before sending `1` to the relevant destination.
 
@@ -123,3 +123,23 @@ digitalWrite(pin, 1);
 With every iteration the `pin` variable is then updated with a `switch` statement.
 
 In terms of hardware, it is necessary to repeat the circuit for every pin.
+
+## keypress
+
+Light up a led following keyboard input.
+
+The `switch ` statement lights up a different pin according to the input received through the `Serial` interface.
+
+In sequence:
+
+- initialize the monitor with `Serial.begin()`
+
+- use `Serial.available()` to consider input from the serial monitor
+
+- with `Serial.parseInt()` you'd be able to parse the input to an integer, but the function would also return `0` after the actual input (possibly due to the new line chartacter)
+
+- use `Serial.readStringUntil("\n")` to consider the input until a new line character
+
+- coerce the input string to an integer with `toInt()` (provided by Arduino)
+
+In terms of hardware the board is similar to that described for the program [**switches**](#switches).
