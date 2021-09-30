@@ -9,7 +9,7 @@ void updatePin();
 
 void setup() {
   pin = LED_1;
-  
+
   pinMode(LED_1, OUTPUT);
   pinMode(LED_2, OUTPUT);
   pinMode(LED_3, OUTPUT);
@@ -21,16 +21,16 @@ void loop() {
   digitalWrite(LED_2, 0);
   digitalWrite(LED_3, 0);
   digitalWrite(BUZZER, 0);
-  
+
   digitalWrite(pin, 1);
   updatePin();
-  
+
   delay(1000);
 }
 
 
 void updatePin() {
-  switch(pin) {
+  switch (pin) {
     case LED_1:
       pin = LED_2;
       break;

@@ -259,13 +259,14 @@ Read the temperature from a sensor and an analog pin.
 The sensor in question is a [TMP 36GZ](https://www.analog.com/media/en/technical-documentation/data-sheets/TMP35_36_37.pdf), and is wired to the board connecting the ground, voltage and the analog pin.
 
 ```text
-    ___
-   /___\
-   sensor
-   | | |
-gnd| | | analog pin
-     |
-  voltage
+     ___
+    |TMP|
+    |___|
+    sensor
+    | | |
+volt| | | ground
+      |
+  analog pin
 ```
 
 For the code, the relevant function is `analogRead()`, and it doesn't seem necessary to set up the pin like the digital counterpart.

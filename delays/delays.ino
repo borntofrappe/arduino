@@ -9,19 +9,19 @@ int index = 0;
 unsigned long previousMillis = 0;
 
 void setup() {
-    for(int i = 0; i < 3; i++) {
-        pinMode(leds[i], OUTPUT);
-    }
-    digitalWrite(leds[0], 1);
+  for (int i = 0; i < 3; i++) {
+    pinMode(leds[i], OUTPUT);
+  }
+  digitalWrite(leds[0], 1);
 }
 
 void loop() {
-    unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis > delays[index]) {
-        digitalWrite(leds[index], 0);
-        index = (index + 1) % 3;
-        digitalWrite(leds[index], 1);
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis > delays[index]) {
+    digitalWrite(leds[index], 0);
+    index = (index + 1) % 3;
+    digitalWrite(leds[index], 1);
 
-        previousMillis = currentMillis;
-    }
+    previousMillis = currentMillis;
+  }
 }
