@@ -204,3 +204,38 @@ To toggle the value of the pin it would be possible to use an additional variabl
 ```c++
 int state = digitalRead(LED);
 ```
+
+## delays
+
+Alternate between leds with independent delays.
+
+_Please note:_ the program, works as a stepping stone for a future script creating a stoplight.
+
+With the script introduced in the [**switches**](#switches) demo it is possible to loop between a set up switches with a fixed delay, thanks to the `delay` function. The drawback of the approach is that not only the delay is the same for every switch, but the logic in the `loop` function is not run until the prescribed amount of time has passed.
+
+Here the program keeps track of the number of milliseconds in an unsigned long variable.
+
+```c++
+unsigned long previousMillis = 0;
+```
+
+In the loop, the `millis()` function then provides the number of milliseconds since the board was initialized.
+
+```c++
+unsigned long currentMillis = millis();
+```
+
+With this information it is possible to do something, light up a led, as the difference between the two values crosses the chosen threshold.
+
+```c++
+if(currentMillis - previousMillis > 1000) {
+}
+```
+
+Note that, as `millis` provides the time since the board was set up, it is essential to update `previousMillis` with the current value.
+
+```c++
+if(currentMillis - previousMillis > 1000) {
+    previousMillis = currentMillis;
+}
+```
