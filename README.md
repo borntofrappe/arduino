@@ -252,7 +252,7 @@ For the software, the `index` variable is used as a controlling variable. Initia
 
 For the second led, the yellow variant, the script also switches the buzzer.
 
-## analogread
+## temperature
 
 Read the temperature from a sensor and an analog pin.
 
@@ -296,3 +296,60 @@ T = (V - 0.5) * 100
 ```
 
 Dividing by `0.01` is fundamentally equivalent as multiplying by `100`.
+
+## distance
+
+Read the distance from a sensor and highlight the measure with a series of leds and a buzzer.
+
+The sensor in question is an ultrasonic module [HC - SR04](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf), and allows to retrieve the distance between sensor and an opposing object by emitting a sound wave and considering its echo.
+
+In terms of wiring the sensor has four pins, connected to voltage, ground and two digital pins.
+
+```text
+     O ____ O
+      | | | |
+      | | | |
+ volt-/ | | \-ground
+trigger-/ \-echo
+```
+
+In terms of logic the pin for the trigger is intialized as output, while the one for the echo as input.
+
+```c++
+pinMode(TRIGGER, OUTPUT);
+pinMode(ECHO, INPUT);
+```
+
+In the loop, and as prefaced earlier, the idea is to send a signal and record a signal back. With a small delay so that the sensor doesn't actually registers the trigger.
+
+1. send a signal with the trigger pin
+
+   ```c++
+   digitalWrite(TRIGGER, 1);
+   ```
+
+2. wait 10 microseconds, the sufficient amount of time described in the document
+
+   ```c++
+   delayMicroseconds(10);
+   ```
+
+3. stop the trigger
+
+   ```c++
+   digitalWrite(TRIGGER, 0);
+   ```
+
+4. read the value from the echo pin
+
+   ```c++
+   long duration = pulseIn(ECHO, 1);
+   ```
+
+The return value is a duration, describing the amount of time between trigger and echo. The document offers the following formula to then compute the distance.
+
+```c++
+long distance = duration / 58.0
+```
+
+With this information the script turns on an increasing number of switches based on a threshold.

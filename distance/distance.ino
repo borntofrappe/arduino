@@ -6,7 +6,7 @@
 #define TRIGGER 6
 #define ECHO 7
 
-#define CENTIMETERS_MAX 100.0
+#define CENTIMETERS_THRESHOLD 100.0
 
 int switches[] = {LED_1, LED_2, LED_3, BUZZER};
 
@@ -27,14 +27,15 @@ void loop() {
   digitalWrite(TRIGGER, 0);
 
   long duration = pulseIn(ECHO, 1);
-  long distance = duration / 58.0; // centimeters
+
+  long distance = duration / 58.0;
 
   Serial.print("Distance: ");
   Serial.print(distance);
   Serial.println(" cm");
 
-  if (distance < CENTIMETERS_MAX) {
-    int n = (CENTIMETERS_MAX - distance) / CENTIMETERS_MAX * 4 + 1;
+  if (distance < CENTIMETERS_THRESHOLD) {
+    int n = (CENTIMETERS_THRESHOLD - distance) / CENTIMETERS_THRESHOLD * 4 + 1;
     for (int i = 0; i < 4; i++) {
       if (i < n) digitalWrite(switches[i], 1);
       else digitalWrite(switches[i], 0);
